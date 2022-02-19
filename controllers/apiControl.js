@@ -17,7 +17,10 @@ const putUsuarios = (req = request, res = response) => {
 
 const postUsuarios = (req = request, res = response) => {
 
+    const { descripcion } = req.body
+
     res.json({
+        descripcion,
         msg: "Esta es una peticion post",
     })
 }

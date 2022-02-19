@@ -1,6 +1,7 @@
 // Importacion cosas necesarias
 const express = require("express")
 const cors = require("cors");
+const conectarDB = require("../DataBase/configDB");
 
 
 class Server {
@@ -15,7 +16,12 @@ class Server {
         this.middlewares()
         //Configuracion Rutas
         this.routes()
+        //conectar con la DB
+        this.conectarConDB()
 
+    }
+    async conectarConDB() {
+        conectarDB()
     }
 
     middlewares() {
