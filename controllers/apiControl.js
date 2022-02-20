@@ -1,5 +1,5 @@
 const { response, request } = require("express")
-
+const  Tarea  =require("../models/modelosDB/tareas")
 
 const getUsuarios = (req = request, res = response) => {
     
@@ -15,19 +15,31 @@ const putUsuarios = (req = request, res = response) => {
     })
 }
 
-const postUsuarios = (req = request, res = response) => {
+const postUsuarios = async (req = request, res = response) => {
 
+    //resibe body de la peticion
     const { descripcion } = req.body
 
-    res.json({
-        descripcion,
-        msg: "Esta es una peticion post",
-    })
+    //Crea la instacia de la tarea
+
+    const tarea = new Tarea({ descripcion })
+    
+    //Guarda la tarea en la DB
+
+    await tarea.save()
+    
+    res.json(descripcion)
 }
 
-const deleateUsuarios =(req, res = response) => {
+const deleateUsuarios =async (req, res = response) => {
+    
+    const { id } = req.query
+
+    const tarea = await Tarea.findByIdAndDelete( id )
+
     res.json({
-        msg: "Esta es una peticion deleate uwu",
+        id,
+        msg: `Se ha borrado la tarea ${tarea.descripcion}`,
     })
 }
 

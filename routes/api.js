@@ -7,6 +7,7 @@ const { getUsuarios,
         postUsuarios, 
         deleateUsuarios 
       } = require("../controllers/apiControl");
+const { existeID, existeDesc } = require("../helpers/validaciones");
 const validarCamposEntrada = require("../middleware/validarCampos");
 
 const router = Router();
@@ -17,10 +18,15 @@ router.put("/", putUsuarios)
 
 router.post("/", [
   check("descripcion", "La descripcion es olbigatoria").not().isEmpty(),
+  check("descripcion").custom( existeDesc ),
   validarCamposEntrada
 ] ,postUsuarios)        
 
-router.delete("/", deleateUsuarios)       
+router.delete("/", [
+  check("id", "El id es olbigatorio y debe ser valido").isMongoId(),
+  check("id").custom( existeID ),
+  validarCamposEntrada
+] , deleateUsuarios)       
 
 
 module.exports = router
