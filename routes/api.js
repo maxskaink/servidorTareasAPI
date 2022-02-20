@@ -14,7 +14,12 @@ const router = Router();
 
 router.get("/", getUsuarios)        
 
-router.put("/", putUsuarios)        
+router.put("/", [
+  check("id", "El id debe de ser valido y obligatorio").isMongoId(),
+  check("id").custom( existeID ),
+  check("descripcion").custom( existeDesc ),
+  validarCamposEntrada
+] , putUsuarios)        
 
 router.post("/", [
   check("descripcion", "La descripcion es olbigatoria").not().isEmpty(),

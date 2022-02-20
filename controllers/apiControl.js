@@ -1,17 +1,29 @@
 const { response, request } = require("express")
 const  Tarea  =require("../models/modelosDB/tareas")
 
-const getUsuarios = (req = request, res = response) => {
-    
+const getUsuarios = async (req = request, res = response) => {
+
+    const tareas = await Tarea.find()
+
     res.json({
+        tareas,
         msg: "Esta es un apeticion get"
     })
 }
 
-const putUsuarios = (req = request, res = response) => {
+const putUsuarios = async (req = request, res = response) => {
+
+    const { id} = req.query
+    const {completado, descripcion } = req.body
+
+    const datosParaActualizar = {
+        completado,
+        descripcion
+    }
+    const tarea = await Tarea.findByIdAndUpdate( id, datosParaActualizar)
 
     res.json({
-        msg: "Esta es una peticion put ",
+        tarea,
     })
 }
 
