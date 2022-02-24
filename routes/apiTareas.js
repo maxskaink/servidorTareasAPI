@@ -2,36 +2,36 @@
 const { Router } = require("express");
 const { check } = require("express-validator")
 
-const { getUsuarios, 
-        putUsuarios, 
-        postUsuarios, 
-        deleateUsuarios 
-      } = require("../controllers/apiControl");
+const { getTareas, 
+        putTareas, 
+        postTareas, 
+        deleateTareas 
+      } = require("../controllers/apiTareasctr");
 const { existeID, existeDesc } = require("../helpers/validaciones");
 const validarCamposEntrada = require("../middleware/validarCampos");
 
 const router = Router();
 
-router.get("/", getUsuarios)        
+router.get("/", getTareas)        
 
 router.put("/", [
   check("id", "El id debe de ser valido y obligatorio").isMongoId(),
   check("id").custom( existeID ),
   check("descripcion").custom( existeDesc ),
   validarCamposEntrada
-] , putUsuarios)        
+] , putTareas)        
 
 router.post("/", [
   check("descripcion", "La descripcion es olbigatoria").not().isEmpty(),
   check("descripcion").custom( existeDesc ),
   validarCamposEntrada
-] ,postUsuarios)        
+] ,postTareas)        
 
 router.delete("/", [
   check("id", "El id es olbigatorio y debe ser valido").isMongoId(),
   check("id").custom( existeID ),
   validarCamposEntrada
-] , deleateUsuarios)       
+] , deleateTareas)       
 
 
 module.exports = router

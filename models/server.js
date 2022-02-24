@@ -8,7 +8,8 @@ class Server {
     
     constructor() {
         this.port = process.env.PORT
-        this.apiPath = "/api"
+        this.apiPathTareas = "/api/tareas/"
+        this.apiPathUsuarios = "/api/usuarios/"
         //Inicar express
         this.app = express()
         
@@ -34,7 +35,8 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.apiPath, require("../routes/api"))
+        this.app.use(this.apiPathTareas, require("../routes/apiTareas"))
+        this.app.use(this.apiPathUsuarios, require("../routes/apiUsuarios"))
     }
 
     listen() {

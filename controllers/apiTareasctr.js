@@ -1,7 +1,8 @@
 const { response, request } = require("express")
 const  Tarea  =require("../models/modelosDB/tareas")
+const Usuario = require("../models/modelosDB/usuario")
 
-const getUsuarios = async (req = request, res = response) => {
+const getTareas = async (req = request, res = response) => {
 
     const tareas = await Tarea.find()
 
@@ -11,7 +12,7 @@ const getUsuarios = async (req = request, res = response) => {
     })
 }
 
-const putUsuarios = async (req = request, res = response) => {
+const putTareas = async (req = request, res = response) => {
 
     const { id} = req.query
     const {completado, descripcion } = req.body
@@ -27,23 +28,32 @@ const putUsuarios = async (req = request, res = response) => {
     })
 }
 
-const postUsuarios = async (req = request, res = response) => {
+const postTareas = async (req = request, res = response) => {
 
     //resibe body de la peticion
-    const { descripcion } = req.body
+    const { descripcion, id } = req.body
+
+
+    const usuario =  Usuario.findById( id )
+
+    if(!usuario) return res.status(400).json({msg: "El usuario no existe"})
 
     //Crea la instacia de la tarea
 
-    const tarea = new Tarea({ descripcion })
+    const tarea = new Tarea({ 
+        descripcion,
+        usuario: usuario._id
+    })
+
     
     //Guarda la tarea en la DB
-
-    await tarea.save()
     
-    res.json(descripcion)
+    await tarea.save()
+
+    res.json(tarea)
 }
 
-const deleateUsuarios =async (req, res = response) => {
+const deleateTareas =async (req, res = response) => {
     
     const { id } = req.query
 
@@ -56,8 +66,8 @@ const deleateUsuarios =async (req, res = response) => {
 }
 
 module.exports = {
-    getUsuarios,
-    putUsuarios,
-    postUsuarios,
-    deleateUsuarios,
+    getTareas,
+    putTareas,
+    postTareas,
+    deleateTareas,
 }

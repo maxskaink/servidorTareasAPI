@@ -9,6 +9,10 @@ const tareaSchema = Schema({
     completado: {
         type: Boolean,
         default: false
+    },
+    usuario:{
+        type: Schema.Types.ObjectId,
+        ref: "Usuario"
     }
 })
 
