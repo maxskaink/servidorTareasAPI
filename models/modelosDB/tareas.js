@@ -1,4 +1,5 @@
 const { Schema, model} = require("mongoose")
+const Usuario = require("./usuario")
 
 
 const tareaSchema = Schema({
@@ -11,11 +12,16 @@ const tareaSchema = Schema({
         default: false
     },
     usuario:{
-        type: Schema.Types.ObjectId,
-        ref: "Usuario"
+        type: String,
+        required: [true, "El dueño de la tarea es obligatorio"]
     }
 })
 
+
+tareaSchema.methods.toJSON = function () {
+    const {__v, _id, usuario ,...resto } = this.toObject()
+    return resto
+}
 
 
 module.exports = model("Tarea", tareaSchema)

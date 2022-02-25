@@ -14,10 +14,6 @@ const usuarioShcema = Schema({
         type:String,
         required: [true, "Es necesario tener una contraseña"]
     },
-    tareas: {
-        type:[ Schema.Types.ObjectId],
-        ref: "Tarea"
-    },
     estado: {
         type:Boolean,
         default: true

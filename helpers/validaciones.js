@@ -11,6 +11,8 @@ const existeID = async (id ) => {
 
 const existeDesc = async ( descripcion ) => {
 
+    req
+
     const tarea = await Tarea.findOne( {descripcion })
 
     if(tarea) throw new Error("La tarea ya esta en la DB")
@@ -21,9 +23,14 @@ const existeCorreo = async( correo ) => {
     if(usuario) throw new Error("El correo ya existe")
 }
 
+const existeIdUsuario = async( id ) => {
+    const usuario =  Usuario.findById( id )
+    if(!usuario) throw new Error("El usuario no existe")
+}
 
 module.exports = {
     existeID,
     existeDesc,
-    existeCorreo
+    existeCorreo,
+    existeIdUsuario
 }

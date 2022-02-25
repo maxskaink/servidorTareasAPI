@@ -1,66 +1,62 @@
+//resibe body de la peticion
 const { response, request } = require("express")
 const  Tarea  =require("../models/modelosDB/tareas")
 const Usuario = require("../models/modelosDB/usuario")
 
 const getTareas = async (req = request, res = response) => {
 
-    const tareas = await Tarea.find()
+    const { id } = req.body
 
-    res.json({
+    const tareas = await Tarea.find({ usuario: id })
+
+    const usuario = await  Usuario.findById( id )
+
+    res.status(200).json({
         tareas,
-        msg: "Esta es un apeticion get"
+        usuario
     })
 }
 
 const putTareas = async (req = request, res = response) => {
 
-    const { id} = req.query
-    const {completado, descripcion } = req.body
+    const {completado, descripcion, id } = req.body
 
-    const datosParaActualizar = {
-        completado,
-        descripcion
-    }
+    const datosParaActualizar = { completado, descripcion }
+    
     const tarea = await Tarea.findByIdAndUpdate( id, datosParaActualizar)
 
-    res.json({
+    res.status(200).json({
         tarea,
     })
 }
 
 const postTareas = async (req = request, res = response) => {
 
-    //resibe body de la peticion
     const { descripcion, id } = req.body
-
-
-    const usuario =  Usuario.findById( id )
-
-    if(!usuario) return res.status(400).json({msg: "El usuario no existe"})
 
     //Crea la instacia de la tarea
 
     const tarea = new Tarea({ 
         descripcion,
-        usuario: usuario._id
+        usuario: id
     })
-
     
     //Guarda la tarea en la DB
-    
+
     await tarea.save()
 
-    res.json(tarea)
+    res.status(200).json(tarea)
 }
 
 const deleateTareas =async (req, res = response) => {
     
-    const { id } = req.query
+    const { id, descripcion } = req.body
 
-    const tarea = await Tarea.findByIdAndDelete( id )
+    const tarea = await Tarea.findOneAndDelete( {usuario: id, descripcion} )
+
+    if(!tarea) res.status(400).json({msg:"Esta tarea para este usuario no exste"})
 
     res.json({
-        id,
         msg: `Se ha borrado la tarea ${tarea.descripcion}`,
     })
 }
