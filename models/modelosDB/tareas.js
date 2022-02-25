@@ -19,7 +19,7 @@ const tareaSchema = Schema({
 
 
 tareaSchema.methods.toJSON = function () {
-    const {__v, _id, usuario ,...resto } = this.toObject()
+    const {__v, usuario ,...resto } = this.toObject()
     return resto
 }
 

@@ -21,9 +21,9 @@ const putTareas = async (req = request, res = response) => {
 
     const {completado, descripcion, id } = req.body
 
-    const datosParaActualizar = { completado, descripcion }
+    const datosParaActualizar = { completado }
     
-    const tarea = await Tarea.findByIdAndUpdate( id, datosParaActualizar)
+    const tarea = await Tarea.findOneAndUpdate( { descripcion, usuario: id}, datosParaActualizar)
 
     res.status(200).json({
         tarea,
