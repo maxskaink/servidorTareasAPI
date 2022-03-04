@@ -19,6 +19,8 @@ router.get("/", [
 ] ,getTareas)        
 
 router.put("/", [
+  check("id", "el id debe ser valido para mongodb").isMongoId(),
+  check("id").custom( existeIdUsuario ),
   validarExistenciaTarea,
   validarCamposEntrada
 ] , putTareas)        
