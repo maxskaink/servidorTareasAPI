@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { check } = require("express-validator")
 
-const { postUsuario, getUsuario, putUsuario } = require("../controllers/apiUsuarioctr");
+const { postUsuario, getUsuario, putUsuario, deleateUsuario } = require("../controllers/apiUsuarioctr");
 const { existeCorreo, existeIdUsuario } = require("../helpers/validaciones");
 const validarCamposEntrada = require("../middleware/validarCampos");
 
@@ -25,6 +25,12 @@ router.put("/", [
     check("correo").custom( existeCorreo ),
     validarCamposEntrada
 ] , putUsuario)
+
+router.delete("/", [
+    check("id", "El id debe de ser valido").isMongoId(),
+    check("id").custom( existeIdUsuario ),
+    validarCamposEntrada
+] , deleateUsuario)
 
 
 module.exports = router

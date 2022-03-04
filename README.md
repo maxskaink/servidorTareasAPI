@@ -37,8 +37,8 @@ EL put resibirá por medio del body lo mas importante, el id del usuario que se 
 }
 ```
 
-## -PROXIMAMENTE:
-proximamente agregare los metodos para borrar la inf del usuario. uwu
+## -POST:
+Para utilizar el post lo unico que debes de hacer es enviar el id del usuario al cual se borrará, esto no lo borrara del todo de la base de datos, pero si lo colocara en estado false, y deberia de ser como si nunca hubiera existido :v . uwu
 
 # 2 - Despues de que tengas aunque sea un usuario, podras relacionarle tareas 7u7
 En las tareas podras agregarle descripcion, relacionarlo a un usuario, y tener un estado donde sabras si lo hiciste o no XD.

@@ -1,5 +1,6 @@
 const { response, request } = require("express")
 const Usuario = require("../models/modelosDB/usuario")
+const Tarea = require("../models/modelosDB/tareas")
 const bcryptjs = require("bcryptjs")
 
 
@@ -69,10 +70,29 @@ const putUsuario = async ( req = request, res = response) => {
     })
 }
 
+const deleateUsuario = async(req= request, res = response) => { 
 
+    const { id } = req.body
+
+    const usuario = await Usuario.findByIdAndUpdate( id , { estado: false})
+
+    const tareas = await Tarea.find( { usuario: usuario.id } )
+
+//    console.log( tareas )
+
+    tareas.forEach( async (tarea) => {
+        await Tarea.findByIdAndRemove(tarea._id)
+   })
+
+    res.status(200).json({
+        msg: `El usuario ${ usuario.nombre } ha sido borrado con exito`,
+        usuario
+    })
+}
 
  module.exports = {
      postUsuario,
      getUsuario,
      putUsuario,
- }
+     deleateUsuario,
+}
