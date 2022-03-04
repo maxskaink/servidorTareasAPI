@@ -25,8 +25,20 @@ donde por medio de el **body** tendras que enviar:
 Donde podras crear nuevos usuarios, para ello tendras que mandar el body donde este lo que se dijo antes, osea, nombre, correo, y contraseña.
 ## -GET:
 El get devolvera una lista con todos los usuarios que esten en la base de datos,
+## -PUT:
+EL put resibirá por medio del body lo mas importante, el id del usuario que se quiere autenticar, luego podra enviar el nombre, correo y contraseña si desea actulizarlo.
+
+```json
+{
+    "id": "6219312b954b31d17f0d4514",
+    "1nombre": "bananeido2",
+    "1correo": "Bananeido123@gmial.com",
+    "contraseña": "miguelAngel"
+}
+```
+
 ## -PROXIMAMENTE:
-proximamente agregare los metodos para borrar y actualizar la inf del usuario. uwu
+proximamente agregare los metodos para borrar la inf del usuario. uwu
 
 # 2 - Despues de que tengas aunque sea un usuario, podras relacionarle tareas 7u7
 En las tareas podras agregarle descripcion, relacionarlo a un usuario, y tener un estado donde sabras si lo hiciste o no XD.

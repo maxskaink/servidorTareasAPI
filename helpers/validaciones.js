@@ -24,7 +24,7 @@ const existeCorreo = async( correo ) => {
 }
 
 const existeIdUsuario = async( id ) => {
-    const usuario =  await Usuario.findById( id )
+    const usuario =  await Usuario.findOne( {_id :id , estado:true} )
     //console.log(usuario)
     if(!usuario) throw new Error("El usuario no existe")
 }
