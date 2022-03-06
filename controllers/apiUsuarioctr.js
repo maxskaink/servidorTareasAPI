@@ -2,6 +2,7 @@ const { response, request } = require("express")
 const Usuario = require("../models/modelosDB/usuario")
 const Tarea = require("../models/modelosDB/tareas")
 const bcryptjs = require("bcryptjs")
+const generarJWT = require("../helpers/generar-jwt")
 
 
  const postUsuario = async (req = request, res = response) => {
@@ -42,7 +43,9 @@ const bcryptjs = require("bcryptjs")
 
 const putUsuario = async ( req = request, res = response) => {
     
-    const { id, nombre, correo, contraseña } = req.body
+    const { nombre, correo, contraseña } = req.body
+
+    const id = req.usuarioAutenticado._id
 
     //valida si exsite la contrasñea
 
@@ -72,7 +75,7 @@ const putUsuario = async ( req = request, res = response) => {
 
 const deleateUsuario = async(req= request, res = response) => { 
 
-    const { id } = req.body
+    const id = req.usuarioAutenticado
 
     const usuario = await Usuario.findByIdAndUpdate( id , { estado: false})
 
@@ -90,9 +93,39 @@ const deleateUsuario = async(req= request, res = response) => {
     })
 }
 
+const loginUsuario = async (req= request, res = response) => {
+
+    const { correo, contraseña } = req.body
+
+    try {
+        
+        const usuario = await Usuario.findOne({ correo })
+
+        //Verificaar contraseña
+
+        const validacionContraseña = bcryptjs.compareSync(contraseña, usuario.contraseña)
+
+        if (!validacionContraseña) res.status(400).json({msg: "El usuario o la contraseña no son validos"})
+
+        
+        const jwtUsuario = await generarJWT( usuario._id )
+
+        res.status(200).json({
+            msg:"TOdo ok",
+            jwtUsuario        
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg: "Ha ocurrido un error por favor comuniquese con el administrador"})
+    }
+
+}
+
  module.exports = {
      postUsuario,
      getUsuario,
      putUsuario,
      deleateUsuario,
+     loginUsuario
 }

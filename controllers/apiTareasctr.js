@@ -5,7 +5,7 @@ const Usuario = require("../models/modelosDB/usuario")
 
 const getTareas = async (req = request, res = response) => {
 
-    const { id } = req.body
+    const id = req.usuarioAutenticado._id
 
     const tareas = await Tarea.find({ usuario: id })
 
@@ -19,7 +19,9 @@ const getTareas = async (req = request, res = response) => {
 
 const putTareas = async (req = request, res = response) => {
 
-    const {completado, descripcion, id } = req.body
+    const {completado, descripcion} = req.body
+
+    const id = req.usuarioAutenticado._id
 
     const datosParaActualizar = { completado }
     
@@ -32,7 +34,8 @@ const putTareas = async (req = request, res = response) => {
 
 const postTareas = async (req = request, res = response) => {
 
-    const { descripcion, id } = req.body
+    const { descripcion } = req.body
+    const id = req.usuarioAutenticado._id
 
     //Crea la instacia de la tarea
 
@@ -50,7 +53,8 @@ const postTareas = async (req = request, res = response) => {
 
 const deleateTareas =async (req, res = response) => {
     
-    const { id, descripcion } = req.body
+    const {descripcion } = req.body
+    const id = req.usuarioAutenticado._id
 
     const tarea = await Tarea.findOneAndDelete( {usuario: id, descripcion} )
 

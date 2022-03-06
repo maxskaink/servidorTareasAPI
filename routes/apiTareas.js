@@ -11,30 +11,30 @@ const { existeID, existeDesc, existeIdUsuario } = require("../helpers/validacion
 const validarCamposEntrada = require("../middleware/validarCampos");
 const validarExistenciaTarea = require("../middleware/validarExistenciaTarea");
 
+const validarJWT = require("../middleware/validar-jwt")
+
 const router = Router();
 
 router.get("/", [
-  check("id").custom( existeIdUsuario ),
+  validarJWT,
   validarCamposEntrada
 ] ,getTareas)        
 
 router.put("/", [
-  check("id", "el id debe ser valido para mongodb").isMongoId(),
-  check("id").custom( existeIdUsuario ),
+  validarJWT,
   validarExistenciaTarea,
   validarCamposEntrada
 ] , putTareas)        
 
 router.post("/", [
-  check("id").custom( existeIdUsuario ),
+  validarJWT,
   check("descripcion", "La descripcion es olbigatoria").not().isEmpty(),
   validarExistenciaTarea,
   validarCamposEntrada
 ] ,postTareas)        
 
 router.delete("/", [
-  check("id", "El id es olbigatorio y debe ser valido").isMongoId(),
-  check("id").custom( existeIdUsuario ),
+  validarJWT,
   check("descripcion", "La descripcion es olbigatoria").not().isEmpty(),
   validarCamposEntrada
 ] , deleateTareas)       

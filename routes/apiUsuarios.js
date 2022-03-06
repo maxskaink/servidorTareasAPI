@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const { check } = require("express-validator")
 
-const { postUsuario, getUsuario, putUsuario, deleateUsuario } = require("../controllers/apiUsuarioctr");
+const { postUsuario, getUsuario, putUsuario, deleateUsuario, loginUsuario } = require("../controllers/apiUsuarioctr");
 const { existeCorreo, existeIdUsuario } = require("../helpers/validaciones");
+const validarJWT = require("../middleware/validar-jwt");
 const validarCamposEntrada = require("../middleware/validarCampos");
 
 const router = Router();
@@ -16,19 +17,22 @@ router.post("/", [
     validarCamposEntrada
 ] ,postUsuario)
 
+router.post("/login", [
+    check("correo", "Por favor ingresa un usuario que exista").not().custom( existeCorreo ),
+    validarCamposEntrada
+] , loginUsuario)
+
 router.get("/", getUsuario)
 
 
 router.put("/", [
-    check("id", "El id debe ser valido para mongo").isMongoId(),
-    check("id").custom( existeIdUsuario ),
+    validarJWT,
     check("correo").custom( existeCorreo ),
     validarCamposEntrada
 ] , putUsuario)
 
 router.delete("/", [
-    check("id", "El id debe de ser valido").isMongoId(),
-    check("id").custom( existeIdUsuario ),
+    validarJWT,
     validarCamposEntrada
 ] , deleateUsuario)
 
