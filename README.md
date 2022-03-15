@@ -9,7 +9,7 @@ Primero utilizar `npm install` para instalar todas las dependencias, ademas de c
 
 # 1- Primero debes de crear un usuario
 Para crear un usuario utiliza la direccion.
-`localhost:8080/api/usuarios/`
+`localhost:8080/api/usuarios/login`
 donde por medio de el **body** tendras que enviar: 
 ```json
 {
