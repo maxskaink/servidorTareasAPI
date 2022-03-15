@@ -9,7 +9,7 @@ Primero utilizar `npm install` para instalar todas las dependencias, ademas de c
 
 # 1- Primero debes de crear un usuario
 Para crear un usuario utiliza la direccion.
-`localhost:8080/api/usuarios/login`
+`localhost:8080/api/usuarios/`
 donde por medio de el **body** tendras que enviar: 
 ```json
 {
@@ -25,7 +25,7 @@ donde por medio de el **body** tendras que enviar:
 Donde podras crear nuevos usuarios, para ello tendras que mandar el body donde este lo que se dijo antes, osea, nombre, correo, y contraseña.
 
 ## - LOGEATE:
-Para poder logearte debes ir a `localhost:8080/api/usuarios/` por el metodo post y enviar en el body el correo y contraseña. Si envias correctamente te regresara el JWT que enviaras en el header para validarte en todo el resto de metodos, envialo como un `token`
+Para poder logearte debes ir a `localhost:8080/api/usuarios/login` por el metodo post y enviar en el body el correo y contraseña. Si envias correctamente te regresara el JWT que enviaras en el header para validarte en todo el resto de metodos, envialo como un `token`
 Recuerda hacerlo seguido, ya que cada cierto tiempo se debe de actulizar para que sea valido
 
 ## -GET:
